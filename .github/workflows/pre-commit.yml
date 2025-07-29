@@ -10,8 +10,8 @@ jobs:
   pre-commit-ckecks:
     runs-on: ubuntu-latest
     environment: Prod
-    #env:
-     # VALIDATE_FILTERS: ${{ vars.VALIDATE_FILTERS }}
+    env:
+     VALIDATE_FILTERS: False
 
     steps:
       - uses: actions/checkout@v4
