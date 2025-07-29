@@ -1,0 +1,26 @@
+policies:
+  - name: ec2-offhours-stop-weekend-blanket
+    resource: ec2
+    mode:
+      memory: 8192
+      timeout: 900
+      type: periodic
+      role: arn:aws:iam::{account_id}:role/test
+      schedule: "cron(30 22 ? * FRI *)"
+      tags:
+        environment: prod
+        appid: 000000
+        contact: test@test.com
+    query:
+      - instance-state-name: running
+    filters:
+      - not:
+          - type: value
+            key: "InstanceId"
+            op: in
+            value_from:
+              url: s3://exceptionsbucketdevnonprod/weekendshutdownInstances.txt
+              format: txt
+    actions:
+      - type: stop
+        force: true
