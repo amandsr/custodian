@@ -1,0 +1,22 @@
+name: Pre-commit
+run-name: Pre-commit-checks
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  pre-commit-ckecks:
+    runs-on: ubuntu-latest
+    environment: Prod
+    #env:
+     # VALIDATE_FILTERS: ${{ vars.VALIDATE_FILTERS }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python 3.9
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.9
+      - uses: pre-commit/action@v3.0.1
